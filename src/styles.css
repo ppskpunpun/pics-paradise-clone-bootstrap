@@ -1,0 +1,20 @@
+.hero-bg-pic {
+    background: url(https://images.unsplash.com/photo-1476067897447-d0c5df27b5df?ixlib=rb-4.0.3&ixid=mnwxmja3fdb8mhxwag90by1wywdlfhx8fgvufdb8fhx8&auto=format&fit=crop&w=2070&q=80);
+    background-size: cover;
+    background-position: center;    
+    height: clamp(256px, 40vw, 512px);
+}
+
+* {
+    font-family: "Quando", serif;
+}
+
+input::placeholder {
+    color: rgb(136, 136, 136) !important;
+}
+
+@media screen and (max-width: 700px) {
+    .hide-at-small {
+        display: none !important;
+    }   
+}
