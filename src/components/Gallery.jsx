@@ -1,10 +1,19 @@
 import { useContext, useState, useEffect, useRef } from 'react'
 import { SearchContext } from "../App"
 
-function PicsColumn({imgs}) {
+function Pic({img, setViewImg}) {
+    return <img 
+        key={img.id} 
+        className="w-100 viewable" 
+        src={img.urls.small} 
+        onClick={() => setViewImg(img)} 
+    />
+}
+
+function PicsColumn({imgs, setViewImg}) {
     return (
         <div className="d-flex flex-column flex-grow-1 gap-3">{
-            imgs.map((img) => <img key={img.id} className="w-100" src={img.urls.small} />)
+            imgs.map((img) => <Pic key={img.id} img={img} setViewImg={setViewImg} />)
         }</div>
     )
 }
@@ -19,6 +28,9 @@ export default function Gallery() {
     const imagesId = useRef(new Set());
     const [page, setPage] = useState(1); // current page for fetching data
     const [error, setError] = useState(null); // error from fetching data
+
+    // for modal
+    const [viewImg, setViewImg] = useState(null);
 
     // emptysearch consider as random images
     const url = search == '' 
@@ -62,7 +74,7 @@ export default function Gallery() {
         // Because, I just want to have a time to see loading animation :)
         if (prevSearch.current != search) setIsShowingImgs(false);
         setTimeout(() => {
-            fetch(testURL)
+            fetch(url)
             .then((res) => res.json())
             .then((jsonData) => search == '' ? sortImagesToEachCol(jsonData) : sortImagesToEachCol(jsonData.results))
             .catch((err) => setError(err))
@@ -87,9 +99,9 @@ export default function Gallery() {
                 <>
                 <h1 className="text-white">{search}</h1>
                 <div className="d-flex flex-column flex-md-row gap-3 mb-5">
-                    <PicsColumn imgs={imagesCols[0]} />
-                    <PicsColumn imgs={imagesCols[1]} />
-                    <PicsColumn imgs={imagesCols[2]} />
+                    <PicsColumn imgs={imagesCols[0]} setViewImg={setViewImg} />
+                    <PicsColumn imgs={imagesCols[1]} setViewImg={setViewImg} />
+                    <PicsColumn imgs={imagesCols[2]} setViewImg={setViewImg} />
                 </div>
                 </>
             }
