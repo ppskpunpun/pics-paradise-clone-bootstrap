@@ -3,6 +3,10 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Gallery from './components/Gallery'
 
+/*
+  Search Component: set search
+  Gallery Component: use search for fetching data
+*/
 export const SearchContext = createContext({
   search: '',
   setSearch: () => {}
